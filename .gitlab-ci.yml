@@ -17,7 +17,7 @@ variables:
 # Команди, які виконуються перед кожним job'ом (опціонально)
 before_script:
   #- 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-  - apk add --no-cache openssh-client bash
+  - apt-get update -y && apt-get install -y openssh-client bash
   - eval $(ssh-agent -s)
   - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
   - mkdir -p ~/.ssh
