@@ -18,6 +18,7 @@ before_script:
 build:
   stage: build
   script:
+    - chmod +x ./gradlew
     - ./gradlew bootJar -x test  # Збирає проєкт без запуску тестів
 
 # --- ЕТАП 2: СТВОРЕННЯ І ПУБЛІКАЦІЯ DOCKER-ОБРАЗУ ---
