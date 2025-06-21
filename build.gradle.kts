@@ -31,6 +31,12 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
+//tasks.withType<Jar> {
+//    manifest {
+//        attributes["Main-Class"] = "sta.cfbe.CoffeFlashBackendApplication.java"
+//    }
+//}
+
 tasks.withType<Test> {
     useJUnitPlatform()
 }
