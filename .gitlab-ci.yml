@@ -49,7 +49,7 @@ docker-build:
 
 deploy:
   stage: deploy
-  image: alpine:latest
+  image: debian:bullseye
   only:
     - main
   script:
