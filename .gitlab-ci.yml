@@ -13,6 +13,12 @@ variables:
 
 # Команди, які виконуються перед кожним job'ом (опціонально)
 before_script:
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
   - export GRADLE_USER_HOME=`pwd`/.gradle  # Використовуємо локальну папку для кешу Gradle
 
 # --- ЕТАП 1: СБІРКА ПРОЕКТУ ---
