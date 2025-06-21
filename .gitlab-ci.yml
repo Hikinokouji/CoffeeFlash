@@ -18,7 +18,7 @@ before_script:
 build:
   stage: build
   script:
-    - gradle build -x test  # Збирає проєкт без запуску тестів
+    - ./gradlew bootJar -x test  # Збирає проєкт без запуску тестів
 
 # --- ЕТАП 2: СТВОРЕННЯ І ПУБЛІКАЦІЯ DOCKER-ОБРАЗУ ---
 docker-build:
