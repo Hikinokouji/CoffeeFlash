@@ -1,5 +1,6 @@
 # Офіційний образ Gradle з підтримкою JDK 21 (для Java 21)
-image: gradle:8.2.1-jdk17
+#image: gradle:8.2.1-jdk17
+image: eclipse-temurin:21-jdk
 
 # Визначаємо етапи пайплайну (по черзі): спочатку build, потім docker
 stages:
