@@ -59,8 +59,13 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - ssh -o StrictHostKeyChecking=no deploy@162.55.59.75 "
-        docker container rm -f coffeflash || true &&
-        docker image rm registry.gitlab.com/sta1485512/cofffeflashbackend:latest || true &&
-        docker pull registry.gitlab.com/sta1485512/cofffeflashbackend:latest &&
-        docker run -d --name coffeflash -p 80:8080 registry.gitlab.com/sta1485512/cofffeflashbackend:latest
+      cd /opt/cofffeflashbackend &&
+      git pull &&
+      docker compose pull backend &&
+      docker compose up -d backend
       "
+
+#      docker container rm -f coffeflash || true &&
+#      docker image rm registry.gitlab.com/sta1485512/cofffeflashbackend:latest || true &&
+#      docker pull registry.gitlab.com/sta1485512/cofffeflashbackend:latest &&
+#      docker run -d --name coffeflash -p 80:8080 registry.gitlab.com/sta1485512/cofffeflashbackend:latest
