@@ -54,13 +54,13 @@ deploy:
     - main
   script:
     - apt-get update -y && apt-get install -y openssh-client
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - ssh -o StrictHostKeyChecking=no deploy@162.55.59.75 "
-      docker pull registry.gitlab.com/sta1485512/cofffeflashbackend:latest &&
-      docker stop coffeflash || true &&
-      docker rm coffeflash || true &&
-      docker run -d --name coffeflash -p 80:8080 registry.gitlab.com/sta1485512/cofffeflashbackend:latest
+        docker container rm -f coffeflash || true &&
+        docker image rm registry.gitlab.com/sta1485512/cofffeflashbackend:latest || true &&
+        docker pull registry.gitlab.com/sta1485512/cofffeflashbackend:latest &&
+        docker run -d --name coffeflash -p 80:8080 registry.gitlab.com/sta1485512/cofffeflashbackend:latest
       "
