@@ -60,6 +60,7 @@ deploy:
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - ssh -o StrictHostKeyChecking=no deploy@162.55.59.75 "
       cd /opt/cofffeflashbackend &&
+      git config --global --add safe.directory /opt/cofffeflashbackend &&
       git pull &&
       docker compose pull backend &&
       docker compose up -d backend
