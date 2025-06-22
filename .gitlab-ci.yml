@@ -58,7 +58,7 @@ deploy:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-    - ssh -o StrictHostKeyChecking=no user@162.55.59.75 "
+    - ssh -o StrictHostKeyChecking=no deploy@162.55.59.75 "
       docker pull registry.gitlab.com/sta1485512/cofffeflashbackend:latest &&
       docker stop coffeflash || true &&
       docker rm coffeflash || true &&
