@@ -17,7 +17,7 @@ public class CoffeFlashBackendApplication {
 
     @GetMapping("/api")
     public void hello(){
-        System.out.printf("Hello World! im workking");
+        System.out.println("testing v2");
     }
 
 }
