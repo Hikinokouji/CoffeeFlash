@@ -1,0 +1,10 @@
+services:
+  frontend:
+    image: ${FRONT_IMAGE}
+    ports:
+      - "${FRONT_PORT}:80"
+
+  backend:
+    image: ${BACK_IMAGE}
+    ports:
+      - "${BACK_PORT}:8080"
