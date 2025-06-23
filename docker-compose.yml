@@ -33,7 +33,7 @@ services:
       - app-net
 
   nginx:
-    image: nginx:stable_alpine
+    image: nginx:alpine
     container_name: nginx
     restart: always
     ports:
