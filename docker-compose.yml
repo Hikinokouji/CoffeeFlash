@@ -31,9 +31,9 @@ services:
     container_name: postgres
     restart: always
     environment:
-      POSTGRES_DB: coffeflash
-      POSTGRES_USER: coffeadmin
-      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
