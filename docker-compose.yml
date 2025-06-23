@@ -8,6 +8,13 @@ services:
     networks:
       - app-net
 
+  frontend_admin:
+    image: ${FRONT_ADMIN_IMAGE}
+    container_name: frontendAdmin
+    restart: always
+    networks:
+      - app-net
+
   backend:
     image: ${BACKEND_IMAGE}
     container_name: backend
@@ -46,6 +53,7 @@ services:
     depends_on:
       - backend
       - frontend_pos
+      - frontend_admin
     networks:
       - app-net
 
