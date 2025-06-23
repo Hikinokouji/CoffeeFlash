@@ -17,7 +17,7 @@ public class CoffeFlashBackendApplication {
 
     @GetMapping("/api")
     public void hello(){
-        System.out.println("new dockers");
+        System.out.println("new dockers updating");
     }
 
 }
