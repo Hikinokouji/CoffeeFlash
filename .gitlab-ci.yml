@@ -2,6 +2,11 @@
 #image: gradle:8.2.1-jdk17
 image: eclipse-temurin:21-jdk
 
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - when: never
+
 # Визначаємо етапи пайплайну (по черзі): спочатку build, потім docker
 stages:
   - build
