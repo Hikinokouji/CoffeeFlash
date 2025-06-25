@@ -12,4 +12,9 @@ public class CoffeFlashBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(CoffeFlashBackendApplication.class, args);
     }
+
+    @GetMapping
+    public String coffeFlashBackend() {
+        return "CoffeFlashBackend";
+    }
 }
