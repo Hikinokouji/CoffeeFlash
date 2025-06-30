@@ -1,5 +1,7 @@
 package sta.cfbe.web.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,13 +20,16 @@ import sta.cfbe.web.mappers.UserMapper;
 @RequestMapping("/auth/")
 @RequiredArgsConstructor
 @Validated
+@Tag(name="AuthController", description = "Auth API")
 public class AuthController {
 
     private final AuthService authService;
     private final UserService userService;
     private final UserMapper userMapper;
 
+
     @PostMapping("/login")
+    @Operation(summary = "Some description")
     public JwtResponse login(@RequestBody JwtRequest loginRequest) {
         return authService.login(loginRequest);
     }

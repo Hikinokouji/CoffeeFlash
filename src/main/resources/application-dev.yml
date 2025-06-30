@@ -12,9 +12,14 @@ spring:
 
   sql:
     init:
-      mode: always
+      mode: never
       continue-on-error: false
 #      data-locations: classpath:demo_data.sql
+
+  liquibase:
+    change-log: classpath:liquibase/db.changeLog.yml
+    enabled: true
+    default-schema: maininfo
 
 
 security:
@@ -22,3 +27,6 @@ security:
     secret: c2ZBJUAjZndFZ2Yyd21uZm9qMTIzb2pmOGozNTFoZm5xMjNuZjkx
     access: 3600000
     refresh: 2592000000
+
+springdoc:
+  override-with-generic-response: false

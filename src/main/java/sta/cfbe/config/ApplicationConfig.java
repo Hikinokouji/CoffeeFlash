@@ -1,5 +1,10 @@
 package sta.cfbe.config;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +42,26 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
+                .components(
+                        new Components()
+                                .addSecuritySchemes("bearerAyth",
+                                        new SecurityScheme()
+                                                .type(SecurityScheme.Type.HTTP)
+                                                .scheme("bearer")
+                                                .bearerFormat("JWT")
+                                )
+                        )
+                .info(new Info()
+                        .title("CoffeFlashAPI")
+                        .description("Demo Spring Boot application")
+                        .version("1.0")
+                );
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(csrf -> csrf.disable())
@@ -53,6 +78,8 @@ public class ApplicationConfig {
                             response.getWriter().write("Forbidden");
                         })))
                 .authorizeHttpRequests( authorizeHttpRequests -> authorizeHttpRequests
+                        .requestMatchers("/swagger-ui/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .anonymous(anonimus -> anonimus.disable()

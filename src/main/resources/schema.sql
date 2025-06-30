@@ -1,5 +1,3 @@
-create schema if not exists maininfo;
-
 create table if not exists maininfo.users
 (
     id bigserial primary key,
