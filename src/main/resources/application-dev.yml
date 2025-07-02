@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/
-    username: coffeadmin
-    password: T5ZTz28huh
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -14,10 +14,12 @@ spring:
     init:
       mode: never
       continue-on-error: false
+#      data-locations: classpath:demo_data.sql
 
   liquibase:
     change-log: classpath:/liquibase/master-main.yml
     enabled: true
+
 
 security:
   jwt:
@@ -29,4 +31,4 @@ springdoc:
   override-with-generic-response: false
 
 tenant:
-  db-url-template: jdbc:postgresql://localhost:5432/{db}
+  db-url-tempalte: jdbc:postgresql://localhost:5432/{db}

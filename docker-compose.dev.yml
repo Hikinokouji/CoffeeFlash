@@ -1,0 +1,23 @@
+# docker-compose.dev.yml
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: dev-postgres
+    environment:
+      POSTGRES_DB: testBD
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - dev-net
+
+networks:
+  dev-net:
+
+volumes:
+  postgres_data:
