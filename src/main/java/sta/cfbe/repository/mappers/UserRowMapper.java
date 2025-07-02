@@ -13,7 +13,7 @@ public class UserRowMapper {
         if(resultSet.next()){
             User user = new User();
             user.setId(resultSet.getLong("id"));
-            user.setPhoneNumber(resultSet.getString("phoneNumber"));
+            user.setPhoneNumber(resultSet.getString("userphone"));
             user.setPassword(resultSet.getString("password"));
             return user;
         }

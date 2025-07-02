@@ -22,33 +22,33 @@ public class UserRepositoryImpl implements UserRepository {
 
     private final String FIND_BY_ID = """
             SELECT u.id as id,
-                   u.phoneNumber as phoneNumber,
+                   u.userphone as userphone,
                    u.password as password
-            FROM maininfo.users u
+            FROM personal.users u
             WHERE id = ?""";
 
     private final String FIND_BY_USERNAME = """
             SELECT u.id as id,
-                   u.phoneNumber as phoneNumber,
+                   u.userphone as userphone,
                    u.password as password
-            FROM maininfo.users u
-            WHERE phoneNumber = ?
+            FROM personal.users u
+            WHERE userphone = ?
             """;
 
     private final String UPDATE = """
-            UPDATE maininfo.users
-            SET phoneNumber = ?,
+            UPDATE personal.users
+            SET userphone = ?,
                 password = ?
             WHERE id = ?
             """;
 
     private final String CREATE = """
-            INSERT INTO maininfo.users(phoneNumber, password)
+            INSERT INTO personal.users(userphone, password)
             VALUES (?, ?)
             """;
 
     private final String DELETE = """
-            DELETE FROM maininfo.users
+            DELETE FROM personal.users
             WHERE id = ?
             """;
 
@@ -71,14 +71,14 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findByUsername(String username) {
+    public Optional<User> findByUsername(String userphone) {
         try{
             Connection connection = dataSourceConfig.getConnection();
             PreparedStatement statement = connection.prepareStatement(FIND_BY_USERNAME,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
 
-            statement.setString(1, username);
+            statement.setString(1, userphone);
             try(ResultSet resultSet = statement.executeQuery()){
                 return Optional.ofNullable(UserRowMapper.mapRow(resultSet));
             }
