@@ -22,28 +22,28 @@ public class UserRepositoryImpl implements UserRepository {
 
     private final String FIND_BY_ID = """
             SELECT u.id as id,
-                   u.userphone as userphone,
+                   u.phoneNumber as phoneNumber,
                    u.password as password
             FROM personal.users u
             WHERE id = ?""";
 
     private final String FIND_BY_USERNAME = """
             SELECT u.id as id,
-                   u.userphone as userphone,
+                   u.phoneNumber as phoneNumber,
                    u.password as password
             FROM personal.users u
-            WHERE userphone = ?
+            WHERE phoneNumber = ?
             """;
 
     private final String UPDATE = """
             UPDATE personal.users
-            SET userphone = ?,
+            SET phoneNumber = ?,
                 password = ?
             WHERE id = ?
             """;
 
     private final String CREATE = """
-            INSERT INTO personal.users(userphone, password)
+            INSERT INTO personal.users(phoneNumber, password)
             VALUES (?, ?)
             """;
 
@@ -71,19 +71,19 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findByUsername(String userphone) {
+    public Optional<User> findByUsername(String phoneNumber) {
         try{
             Connection connection = dataSourceConfig.getConnection();
             PreparedStatement statement = connection.prepareStatement(FIND_BY_USERNAME,
                     ResultSet.TYPE_SCROLL_INSENSITIVE,
                     ResultSet.CONCUR_READ_ONLY);
 
-            statement.setString(1, userphone);
+            statement.setString(1, phoneNumber);
             try(ResultSet resultSet = statement.executeQuery()){
                 return Optional.ofNullable(UserRowMapper.mapRow(resultSet));
             }
         } catch (SQLException e) {
-            throw new ResourceMappingException("Exception while finding user by userPhone.");
+            throw new ResourceMappingException("Exception while finding user by phoneNumber.");
         }
     }
 

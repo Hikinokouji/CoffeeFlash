@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User getByUsername(String username) {
-        return userRepository.findByUsername(username)
+    public User getByUsername(String phoneNumber) {
+        return userRepository.findByUsername(phoneNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 

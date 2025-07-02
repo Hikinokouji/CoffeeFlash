@@ -38,12 +38,12 @@ public class JwtTokenProvider {
     }
 
     public String createAccessToken(Long userId,
-                              String userPhonme) {
+                              String phoneNumber) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + jwtProperties.getAccess());
 
         return Jwts.builder()
-                .subject(userPhonme)
+                .subject(phoneNumber)
                 .claim("userId", userId)
                 .issuedAt(now)
                 .expiration(validity)
@@ -52,12 +52,12 @@ public class JwtTokenProvider {
     }
 
     public String createRefreshToken(Long userId,
-                                     String userPhonme) {
+                                     String phoneNumber) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + jwtProperties.getRefresh());
 
         return Jwts.builder()
-                .subject(userPhonme)
+                .subject(phoneNumber)
                 .claim("userId", userId)
                 .issuedAt(now)
                 .expiration(validity)
@@ -73,7 +73,7 @@ public class JwtTokenProvider {
         Long userId = Long.valueOf(getId(refreshToken));
         User user = userService.getById(userId);
         jwtResponse.setId(userId);
-        jwtResponse.setUserPhone(user.getPhoneNumber());
+        jwtResponse.setPhoneNumber(user.getPhoneNumber());
         jwtResponse.setAccessToken(createAccessToken(userId, user.getPhoneNumber()));
         jwtResponse.setRefreshToken(createRefreshToken(userId, user.getPhoneNumber()));
         return jwtResponse;

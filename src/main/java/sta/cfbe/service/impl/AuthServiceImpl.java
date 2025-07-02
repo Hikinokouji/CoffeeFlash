@@ -22,10 +22,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public JwtResponse login(JwtRequest loginRequest) {
         JwtResponse jwtResponse = new JwtResponse();
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-        User user = userService.getByUsername(loginRequest.getUsername());
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getPhoneNumber(), loginRequest.getPassword()));
+        User user = userService.getByUsername(loginRequest.getPhoneNumber());
         jwtResponse.setId(user.getId());
-        jwtResponse.setUserPhone(user.getPhoneNumber());
+        jwtResponse.setPhoneNumber(user.getPhoneNumber());
         jwtResponse.setAccessToken(jwtTokenProvider.createAccessToken(user.getId(), user.getPhoneNumber()));
         jwtResponse.setRefreshToken(jwtTokenProvider.createRefreshToken(user.getId(), user.getPhoneNumber()));
         return jwtResponse;

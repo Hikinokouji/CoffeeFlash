@@ -3,7 +3,7 @@ create schema if not exists personal;
 create table if not exists personal.users
 (
     id bigserial primary key,
-    userPhone varchar(255) not null unique,
+    phoneNumber varchar(255) not null unique,
     password varchar(255) not null
 );
 

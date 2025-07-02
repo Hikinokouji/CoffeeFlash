@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 public class JwtRequest {
 
-    @NotNull(message = "Username must be not null.")
-    private String username;
+    @NotNull(message = "phoneNumber must be not null.")
+    private String phoneNumber;
     @NotNull(message = "Password must be not null.")
     private String password;
 

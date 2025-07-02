@@ -6,7 +6,7 @@ public interface UserService {
 
     User getById(Long id);
 
-    User getByUsername(String userPhone);
+    User getByUsername(String phoneNumber);
 
     User create(User user);
 
