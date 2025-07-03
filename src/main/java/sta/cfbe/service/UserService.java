@@ -9,7 +9,4 @@ public interface UserService {
     User getByUsername(String phoneNumber);
 
     User create(User user);
-
-    void delete(Long id);
-
 }

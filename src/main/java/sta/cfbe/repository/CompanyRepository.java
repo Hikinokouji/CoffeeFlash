@@ -7,13 +7,17 @@ import java.util.UUID;
 
 public interface CompanyRepository {
 
-    Optional<Company> findById(Long id);
+    void createDataBase(String company_uuid);
 
-    Optional<Company> findByCompanyUUID(UUID company_uuid);
+    Optional<Company> saveInTable(String companyUuid);
 
-    void save(Company company);
-
-    void update(Company company);
-
-    void delete(Long id);
+//    Optional<Company> findById(Long id);
+//
+//    Optional<Company> findByCompanyUUID(UUID company_uuid);
+//
+//    void save(Company company);
+//
+//    void update(Company company);
+//
+//    void delete(Long id);
 }

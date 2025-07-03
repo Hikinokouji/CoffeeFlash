@@ -70,6 +70,7 @@ public class JwtTokenProvider {
         if(!validatToken(refreshToken)){
             throw new AccessDeniedException();
         }
+        System.out.println(getId(refreshToken));
         Long userId = Long.valueOf(getId(refreshToken));
         User user = userService.getById(userId);
         jwtResponse.setId(userId);
@@ -96,7 +97,7 @@ public class JwtTokenProvider {
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .get("id")
+                .get("userId")
                 .toString();
     }
 

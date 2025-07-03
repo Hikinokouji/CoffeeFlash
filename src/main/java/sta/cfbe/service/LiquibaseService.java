@@ -23,7 +23,7 @@ public class LiquibaseService {
     public void runLiquibaseForTenant(String tenantDbUrl) throws SQLException, LiquibaseException {
         String username = environment.getProperty("spring.datasource.username");
         String password = environment.getProperty("spring.datasource.password");
-        String rawUrl = environment.getProperty("test.liquibase.url");
+        String rawUrl = environment.getProperty("tenant.db-url-tempalte");
         String tenantUrl = rawUrl.replace("{db}", tenantDbUrl);
 
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(
@@ -31,7 +31,7 @@ public class LiquibaseService {
         );
 
         Liquibase liquibase = new Liquibase(
-                "db/master-tenant.yml",
+                "liquibase/master-tenant.yml",
                 new ClassLoaderResourceAccessor(),
                 database
         );
