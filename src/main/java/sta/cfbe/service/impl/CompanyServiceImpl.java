@@ -1,5 +1,6 @@
 package sta.cfbe.service.impl;
 
+import jakarta.transaction.Transactional;
 import liquibase.exception.LiquibaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

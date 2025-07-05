@@ -1,6 +1,7 @@
 package sta.cfbe.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.processing.SQL;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,8 +13,10 @@ import sta.cfbe.repository.CompanyRepository;
 import sta.cfbe.repository.UserRepository;
 import sta.cfbe.service.CompanyService;
 import sta.cfbe.service.UserService;
+import sta.cfbe.web.dto.user.UserResponse;
 
 import javax.swing.text.html.Option;
+import java.sql.SQLException;
 import java.util.Optional;
 
 @Service
@@ -26,7 +29,7 @@ public class UserServiceImpl implements UserService {
     private final TransactionOperations transactionOperations;
 
     @Override
-    @Transactional(readOnly = true)
+    //@Transactional(readOnly = true)
     public User getById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
@@ -40,18 +43,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    //@Transactional
     public User create(User user) {
         if(userRepository.findByPhoneNumber(user.getPhoneNumber()).isPresent()){
             throw new IllegalStateException("Phone number already in use");
         }
         Optional<Company> company = companyService.createCompany();
-
         return transactionOperations.execute(status -> {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             company.ifPresent(c -> user.getCompanies().add(c));
-            userRepository.save(user);
-            return user;
+            return userRepository.save(user);
+
         });
     }
 }

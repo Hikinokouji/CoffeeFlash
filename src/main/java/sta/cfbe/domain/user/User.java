@@ -20,7 +20,7 @@ public class User {
     @Column(name="password" , unique = true, nullable = false)
     private String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name="user_company",
             schema="personal",
@@ -28,5 +28,4 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "company_uuid")
     )
     private Set<Company> companies = new HashSet<>();
-
 }

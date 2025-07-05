@@ -8,6 +8,8 @@ import sta.cfbe.repository.DataSourceConfig;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,6 +18,12 @@ import java.util.UUID;
 public class CompanyRepositoryImpl implements CompanyRepository {
 
     private final DataSourceConfig dataSourceConfig;
+
+    private final String FIND_COMPANY_BY_ID = """
+            SELECT * FROM personal.companies c
+                JOIN personal.user_company uc ON uc.company_uuid = c.company_uuid
+                WHERE uc.user_id = ?
+            """;
 
     private final String CREATE_COMPANY = "CREATE DATABASE ";
 
@@ -26,7 +34,6 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
     @Override
     public void createDataBase(String companyUuid) {
-        //findDataBaseByUuid();
         String sql = CREATE_COMPANY + "\"" + companyUuid + "\"";
         try(Connection connection = dataSourceConfig.getConnection();
             Statement statement = connection.createStatement()){
@@ -60,29 +67,28 @@ public class CompanyRepositoryImpl implements CompanyRepository {
         }
     }
 
+    @Override
+    public List<Company> findCompanyById(Long id) {
+        List<Company> companies = new ArrayList<>();
 
-//    @Override
-//    public Optional<Company> findById(Long id) {
-//        return Optional.empty();
-//    }
-//
-//    @Override
-//    public Optional<Company> findByCompanyUUID(UUID company_uuid) {
-//        return Optional.empty();
-//    }
-//
-//    @Override
-//    public void save(Company company) {
-//
-//    }
-//
-//    @Override
-//    public void update(Company company) {
-//
-//    }
-//
-//    @Override
-//    public void delete(Long id) {
-//
-//    }
+        try (Connection connection = dataSourceConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_COMPANY_BY_ID)) {
+
+            statement.setLong(1, id);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    Company company = new Company();
+                    company.setCompany_uuid(rs.getString("company_uuid"));
+                    company.setCompanyName(rs.getString("company_name"));
+                    companies.add(company);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return companies;
+    }
 }

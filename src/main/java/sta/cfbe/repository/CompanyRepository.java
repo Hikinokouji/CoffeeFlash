@@ -1,7 +1,9 @@
 package sta.cfbe.repository;
 
+import org.springframework.data.jpa.repository.Query;
 import sta.cfbe.domain.company.Company;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -11,13 +13,5 @@ public interface CompanyRepository {
 
     Optional<Company> saveInTable(String companyUuid);
 
-//    Optional<Company> findById(Long id);
-//
-//    Optional<Company> findByCompanyUUID(UUID company_uuid);
-//
-//    void save(Company company);
-//
-//    void update(Company company);
-//
-//    void delete(Long id);
+    List<Company> findCompanyById(Long id);
 }

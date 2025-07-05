@@ -113,7 +113,7 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String token) {
         String userPhone = getUSerPhoneNumber(token);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getId(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(getUSerPhoneNumber(token));
         return new UsernamePasswordAuthenticationToken(userPhone, "", userDetails.getAuthorities());
     }
 
