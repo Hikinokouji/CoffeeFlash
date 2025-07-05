@@ -1,6 +1,9 @@
 package sta.cfbe.service;
 
 import sta.cfbe.domain.user.User;
+import sta.cfbe.web.dto.user.UserResponse;
+
+import java.util.Optional;
 
 public interface UserService {
 
@@ -9,7 +12,4 @@ public interface UserService {
     User getByUsername(String phoneNumber);
 
     User create(User user);
-
-    void delete(Long id);
-
 }

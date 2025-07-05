@@ -20,6 +20,4 @@ public class UserDTO {
     @Length(max=255, message = "...")
     private String password;
 
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-//    private String passwordConfirm;
 }

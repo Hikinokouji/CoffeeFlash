@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sta.cfbe.domain.user.User;
 import sta.cfbe.service.AuthService;
 import sta.cfbe.service.UserService;
+import sta.cfbe.web.dto.auth.JwtRefresh;
 import sta.cfbe.web.dto.auth.JwtRequest;
 import sta.cfbe.web.dto.auth.JwtResponse;
 import sta.cfbe.web.dto.user.UserDTO;
@@ -42,7 +43,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public JwtResponse refresh(@RequestBody String refreshToken) {
-        return authService.refresh(refreshToken);
+    public JwtResponse refresh(@RequestBody JwtRefresh token) {
+        return authService.refresh(token.getRefreshToken());
     }
 }

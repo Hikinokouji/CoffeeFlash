@@ -32,7 +32,9 @@ public class JwtTokenFilter extends GenericFilterBean {
                 if (authentication != null) {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
-            }catch (ResourceNotFoundException ignored){}
+            }catch (ResourceNotFoundException ignored){
+                throw new ResourceNotFoundException("Token not found");
+            }
         }
         //Передає запит далі по цепі фільтрів
         filterChain.doFilter(servletRequest, servletResponse);
