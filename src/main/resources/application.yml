@@ -29,4 +29,4 @@ springdoc:
   override-with-generic-response: false
 
 tenant:
-  db-url-template: jdbc:postgresql://localhost:5432/{db}
+  db-url-template: jdbc:postgresql://postgres:5432/postgres/{db}
