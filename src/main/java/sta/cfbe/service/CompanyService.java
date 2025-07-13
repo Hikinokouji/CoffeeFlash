@@ -8,4 +8,6 @@ public interface CompanyService {
 
     Optional<Company> createCompany();
 
+    Optional<Company> findCompanyById(String companyId);
+
 }

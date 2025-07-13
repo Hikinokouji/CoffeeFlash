@@ -12,4 +12,6 @@ public interface UserService {
     User getByUsername(String phoneNumber);
 
     User create(User user);
+
+    boolean existsByUserIdAndCompanyId(Long userId, String companyId);
 }

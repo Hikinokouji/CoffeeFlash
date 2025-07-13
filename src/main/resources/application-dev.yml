@@ -32,3 +32,11 @@ springdoc:
 
 tenant:
   db-url-template: jdbc:postgresql://localhost:5432/{db}
+
+logging:
+  level:
+    root: info
+#    sta.cfbe.repository.impl.CompanyRepositoryImpl: info
+#  file:
+#    name: example
+#    path: /

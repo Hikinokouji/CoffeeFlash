@@ -1,6 +1,7 @@
 package sta.cfbe.repository.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import sta.cfbe.domain.company.Company;
 import sta.cfbe.repository.CompanyRepository;
@@ -11,15 +12,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class CompanyRepositoryImpl implements CompanyRepository {
 
     private final DataSourceConfig dataSourceConfig;
 
-    private final String FIND_COMPANY_BY_ID = """
+    private final String FIND_ALL_COMPANY_BY_ID = """
             SELECT * FROM personal.companies c
                 JOIN personal.user_company uc ON uc.company_uuid = c.company_uuid
                 WHERE uc.user_id = ?
@@ -31,14 +32,13 @@ public class CompanyRepositoryImpl implements CompanyRepository {
             INSERT INTO personal.companies (company_uuid, createdate, company_name) 
             VALUES (?, ?, ?);
             """;
-
     @Override
     public void createDataBase(String companyUuid) {
         String sql = CREATE_COMPANY + "\"" + companyUuid + "\"";
         try(Connection connection = dataSourceConfig.getConnection();
             Statement statement = connection.createStatement()){
             statement.executeUpdate(sql);
-            System.out.println("Created dataBase: " + companyUuid);
+            log.info("Created Database " + companyUuid);
         }catch (SQLException exception){
             exception.printStackTrace();
         }
@@ -56,7 +56,7 @@ public class CompanyRepositoryImpl implements CompanyRepository {
             System.out.println("Saved dataBase: " + companyUuid);
 
             Company company = new Company();
-            company.setCompany_uuid(companyUuid);
+            company.setCompanyUuid(companyUuid);
             company.setCreatedate(Timestamp.valueOf(LocalDateTime.now()));
             company.setCompanyName("Моя компанія");
 
@@ -72,14 +72,14 @@ public class CompanyRepositoryImpl implements CompanyRepository {
         List<Company> companies = new ArrayList<>();
 
         try (Connection connection = dataSourceConfig.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_COMPANY_BY_ID)) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_COMPANY_BY_ID)) {
 
             statement.setLong(1, id);
 
             try (ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
                     Company company = new Company();
-                    company.setCompany_uuid(rs.getString("company_uuid"));
+                    company.setCompanyUuid(rs.getString("company_uuid"));
                     company.setCompanyName(rs.getString("company_name"));
                     companies.add(company);
                 }

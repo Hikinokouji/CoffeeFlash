@@ -22,4 +22,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     User save(User user);
+
+    //boolean existsByUsers_IdAndCompany_Id(Long users_Id, String company_Id);
+    boolean existsByIdAndCompanies_CompanyUuid(Long userId, String companyUuid);
+
 }

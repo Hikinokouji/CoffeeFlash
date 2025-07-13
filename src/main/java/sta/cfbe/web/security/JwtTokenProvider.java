@@ -68,9 +68,8 @@ public class JwtTokenProvider {
     public JwtResponse refreshUserToken(String refreshToken) {
         JwtResponse jwtResponse = new JwtResponse();
         if(!validatToken(refreshToken)){
-            throw new AccessDeniedException();
+            throw new AccessDeniedException("Не валідний токен");
         }
-        System.out.println(getId(refreshToken));
         Long userId = Long.valueOf(getId(refreshToken));
         User user = userService.getById(userId);
         jwtResponse.setId(userId);
@@ -115,6 +114,10 @@ public class JwtTokenProvider {
         String userPhone = getUSerPhoneNumber(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(getUSerPhoneNumber(token));
         return new UsernamePasswordAuthenticationToken(userPhone, "", userDetails.getAuthorities());
+    }
+
+    public Long tokenIdForController(String bearerToken) {
+        return Long.valueOf(getId(bearerToken.substring(7)));
     }
 
 }

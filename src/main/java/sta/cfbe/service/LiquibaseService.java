@@ -23,25 +23,6 @@ import java.sql.SQLException;
 public class LiquibaseService {
     private final Environment environment;
 
-//    public void runLiquibaseForTenant(String tenantDbUrl) throws SQLException, LiquibaseException {
-//        String username = environment.getProperty("spring.datasource.username");
-//        String password = environment.getProperty("spring.datasource.password");
-//        String rawUrl = environment.getProperty("tenant.db-url-template");
-//        String tenantUrl = rawUrl.replace("{db}", tenantDbUrl);
-//
-//        Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(
-//                new JdbcConnection(DriverManager.getConnection(tenantUrl, username, password))
-//        );
-//
-//        Liquibase liquibase = new Liquibase(
-//                "liquibase/master-tenant.yml",
-//                new ClassLoaderResourceAccessor(),
-//                database
-//        );
-//
-//        liquibase.update(new Contexts());
-//    }
-
     public void runLiquibaseForTenant(String tenantDbName) throws SQLException, LiquibaseException {
         String username = environment.getProperty("spring.datasource.username");
         String password = environment.getProperty("spring.datasource.password");
@@ -52,7 +33,6 @@ public class LiquibaseService {
         }
 
         String tenantUrl = rawUrl.replace("{db}", tenantDbName);
-        //log.info("Running Liquibase for tenant DB: {}", tenantUrl);
 
         Database database = DatabaseFactory.getInstance()
                 .findCorrectDatabaseImplementation(
