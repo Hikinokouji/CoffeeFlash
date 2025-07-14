@@ -9,18 +9,22 @@ import sta.cfbe.domain.company.Company;
 import sta.cfbe.domain.exeption.AccessDeniedException;
 import sta.cfbe.domain.exeption.resource.ResourceNotFoundException;
 import sta.cfbe.domain.user.User;
+import sta.cfbe.repository.CompanyRepository;
 import sta.cfbe.repository.UserRepository;
 import sta.cfbe.service.CompanyService;
 import sta.cfbe.service.UserService;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final CompanyRepository companyRepository;
     private final CompanyService companyService;
     private final PasswordEncoder passwordEncoder;
     private final TransactionOperations transactionOperations;
@@ -53,6 +57,13 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotFoundException("Access Denied : 012");
             //error list
         }
+    }
+
+    @Override
+    public Set<String> findCompanyByUser(User user) {
+
+        Set<String> companies = companyRepository.findCompaniesByUserId(user.getId());
+        return companies;
     }
 
     @Override

@@ -1,9 +1,18 @@
 package sta.cfbe.config;
 
+import liquibase.exception.LiquibaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import sta.cfbe.domain.company.Company;
+import sta.cfbe.domain.exeption.AccessDeniedException;
+import sta.cfbe.repository.CompanyRepository;
+import sta.cfbe.service.CompanyService;
+import sta.cfbe.service.LiquibaseService;
 import sta.cfbe.service.UserService;
 import sta.cfbe.web.security.JwtTokenProvider;
+
+import java.sql.SQLException;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -11,11 +20,21 @@ public class AccessChecked {
 
     private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final CompanyRepository companyRepository;
+    private final LiquibaseService liquibaseService;
 
-    public boolean existsByUserIdAndCompanyId(String authHeader, String companyId) {
+    public boolean existsByUserIdAndCompanyId(String authHeader, String companyId) throws LiquibaseException {
 
-        Long userId = jwtTokenProvider.tokenIdForController(authHeader);
-        return userService.existsByUserIdAndCompanyId(userId, companyId);
+        try{
+            if(companyRepository.findCompanyByUuid(companyId).isPresent()){
+                liquibaseService.runLiquibaseForTenant(companyId);
+                Long userId = jwtTokenProvider.tokenIdForController(authHeader);
+                return userService.existsByUserIdAndCompanyId(userId, companyId);
+            }
+            throw new AccessDeniedException("Access denied: 013");
+        }catch (SQLException e) {
+            throw new AccessDeniedException("Access denied: 014");
+        }
     }
 }
 

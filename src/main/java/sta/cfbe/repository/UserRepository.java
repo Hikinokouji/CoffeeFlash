@@ -23,7 +23,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User save(User user);
 
-    //boolean existsByUsers_IdAndCompany_Id(Long users_Id, String company_Id);
     boolean existsByIdAndCompanies_CompanyUuid(Long userId, String companyUuid);
 
 }
