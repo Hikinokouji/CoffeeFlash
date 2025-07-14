@@ -16,7 +16,8 @@ import java.util.UUID;
 @Data
 public class Company{
     @Id
-    private String company_uuid;
+    @Column(name = "company_uuid")
+    private String companyUuid;
 
     @JsonIgnore
     @Column(name="createdate")

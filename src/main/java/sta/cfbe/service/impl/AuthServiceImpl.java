@@ -28,6 +28,7 @@ public class AuthServiceImpl implements AuthService {
         jwtResponse.setPhoneNumber(user.getPhoneNumber());
         jwtResponse.setAccessToken(jwtTokenProvider.createAccessToken(user.getId(), user.getPhoneNumber()));
         jwtResponse.setRefreshToken(jwtTokenProvider.createRefreshToken(user.getId(), user.getPhoneNumber()));
+        jwtResponse.setCompanyUuid(userService.findCompanyByUser(user));
         return jwtResponse;
     }
 
@@ -35,4 +36,5 @@ public class AuthServiceImpl implements AuthService {
     public JwtResponse refresh(String refreshToken) {
         return jwtTokenProvider.refreshUserToken(refreshToken);
     }
+
 }

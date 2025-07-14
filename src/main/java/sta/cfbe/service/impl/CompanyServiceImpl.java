@@ -5,6 +5,7 @@ import liquibase.exception.LiquibaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sta.cfbe.domain.company.Company;
+import sta.cfbe.domain.exeption.resource.ResourceNotFoundException;
 import sta.cfbe.repository.CompanyRepository;
 import sta.cfbe.service.CompanyService;
 import sta.cfbe.service.LiquibaseService;
@@ -31,6 +32,11 @@ public class CompanyServiceImpl implements CompanyService {
         } catch (LiquibaseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Optional<Company> findCompanyById(String companyId) {
+        return Optional.empty();
     }
 
     private String convetUUIDtoString(UUID companyUuid){

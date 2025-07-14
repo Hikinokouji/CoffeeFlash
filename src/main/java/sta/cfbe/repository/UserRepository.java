@@ -22,4 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     User save(User user);
+
+    boolean existsByIdAndCompanies_CompanyUuid(Long userId, String companyUuid);
+
 }

@@ -50,6 +50,9 @@ dependencies {
     implementation("org.hibernate.validator:hibernate-validator:8.0.2.Final")
     implementation("jakarta.validation:jakarta.validation-api:3.0.2")
 
+    implementation("org.springframework.boot:spring-boot-starter-logging")
+    implementation("org.springframework.boot:spring-boot-starter-log4j2")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }

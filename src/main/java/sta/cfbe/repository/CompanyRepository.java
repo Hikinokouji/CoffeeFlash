@@ -5,6 +5,7 @@ import sta.cfbe.domain.company.Company;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 public interface CompanyRepository {
@@ -14,4 +15,8 @@ public interface CompanyRepository {
     Optional<Company> saveInTable(String companyUuid);
 
     List<Company> findCompanyById(Long id);
+
+    Optional<Company> findCompanyByUuid(String companyUuid);
+
+    Set<String> findCompaniesByUserId(Long userId);
 }
