@@ -3,6 +3,7 @@ package sta.cfbe.repository.admins;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import sta.cfbe.entity.exeption.resource.ResourceDuplicateException;
 import sta.cfbe.entity.exeption.resource.ResourceNotFoundException;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class ProductRepository{
@@ -62,6 +64,7 @@ public class ProductRepository{
                 return new ProductResponseDTO(id, productRequestDTO.getProductName(), productRequestDTO.getPrice());
             }
         }catch (SQLException sqlException) {
+            log.error("ProductRepository::createProdcut: ", sqlException);
             throw new ResourceDuplicateException("Товар з такою назвою існує.");
         }
     }
@@ -78,7 +81,8 @@ public class ProductRepository{
                 }
                 throw new ResourceNotFoundException("Товар за зазначеним id - відсутній");
             }
-        }catch (SQLException e) {
+        }catch (SQLException sqlException) {
+            log.error("ProductRepository::findProductById: ", sqlException);
             throw new ResourceNotFoundException("Товар за зазначеним id - відсутній");
         }
     }
@@ -95,7 +99,8 @@ public class ProductRepository{
                 }
                 return products;
             }
-        }catch (SQLException e) {
+        }catch (SQLException sqlException) {
+            log.error("ProductRepository::findAllProduct: ", sqlException);
             throw new ResourceNotFoundException("Товар не знайдено");
         }
     }
@@ -112,7 +117,8 @@ public class ProductRepository{
                 }
                 throw new ResourceNotFoundException("Товар за зазначеним id - відсутній");
             }
-        } catch (SQLException e) {
+        } catch (SQLException sqlException) {
+            log.error("ProductRepository::updateProduct: ", sqlException);
             throw new ResourceNotFoundException("Товар за зазначеним id - відсутній");
         }
     }
@@ -123,7 +129,8 @@ public class ProductRepository{
             statement.setLong(1, productId);
             statement.execute();
 
-        } catch (SQLException e) {
+        } catch (SQLException sqlException) {
+            log.error("ProductRepository::updateProduct: ", sqlException);
             throw new ResourceNotFoundException("Товар за зазначеним id - відсутній");
         }
     }
