@@ -1,6 +1,6 @@
 package sta.cfbe.web.security;
 
-import sta.cfbe.domain.user.User;
+import sta.cfbe.entity.user.User;
 
 public class JwtEntityFactory {
     public static JwtEntity create(User user) {

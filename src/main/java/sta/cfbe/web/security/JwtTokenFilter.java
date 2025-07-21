@@ -10,11 +10,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
-import sta.cfbe.domain.exeption.resource.ResourceNotFoundException;
+import sta.cfbe.entity.exeption.resource.ResourceNotFoundException;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
-import java.security.SignatureException;
 
 @AllArgsConstructor
 public class JwtTokenFilter extends GenericFilterBean {
