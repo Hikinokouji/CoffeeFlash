@@ -3,16 +3,13 @@ package sta.cfbe.config;
 import liquibase.exception.LiquibaseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import sta.cfbe.domain.company.Company;
-import sta.cfbe.domain.exeption.AccessDeniedException;
-import sta.cfbe.repository.CompanyRepository;
-import sta.cfbe.service.CompanyService;
-import sta.cfbe.service.LiquibaseService;
-import sta.cfbe.service.UserService;
+import sta.cfbe.entity.exeption.AccessDeniedException;
+import sta.cfbe.repository.admins.CompanyRepository;
+import sta.cfbe.service.configService.LiquibaseService;
+import sta.cfbe.service.admin.UserService;
 import sta.cfbe.web.security.JwtTokenProvider;
 
 import java.sql.SQLException;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -38,10 +35,10 @@ public class AccessChecked {
     }
 }
 
-//Задача цього компонента перевіряти доступність користувача до інших компаній.
-//        Виключити випадки коли користувач може під своїм токеном робити запити на інші компанії
-//    Окрім загального фільтру тепер до кожного запиту в контройлер, додається токен та перевіряється
-//        чи є зв'язок цього користувача в базі по ManyToMany зв'язку. JPA генерує запит перевіряє та надсилає
-//        відповідь true/false а далі користувач або залишається не авторизованим або переходить до
-//        ! Рекомендовано в майбутньому розглянути інший варіант перевірки так як ми створюємо таким чином додаткове
-//        навантаження на Базу
+//          Задача цього компонента перевіряти доступність користувача до інших компаній.
+//          Виключити випадки коли користувач може під своїм токеном робити запити на інші компанії
+//          Окрім загального фільтру тепер до кожного запиту в контройлер, додається токен та перевіряється
+//          чи є зв'язок цього користувача в базі по ManyToMany зв'язку. JPA генерує запит перевіряє та надсилає
+//          відповідь true/false а далі користувач або залишається не авторизованим або переходить до
+//          ! Рекомендовано в майбутньому розглянути інший варіант перевірки так як ми створюємо таким чином додаткове
+//          навантаження на Базу

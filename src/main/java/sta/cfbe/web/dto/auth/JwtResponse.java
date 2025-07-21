@@ -1,7 +1,6 @@
 package sta.cfbe.web.dto.auth;
 
 import lombok.Data;
-import sta.cfbe.domain.company.Company;
 
 import java.util.Set;
 

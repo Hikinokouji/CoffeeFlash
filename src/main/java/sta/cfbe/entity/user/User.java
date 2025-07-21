@@ -1,0 +1,31 @@
+package sta.cfbe.entity.user;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import sta.cfbe.entity.company.Company;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "users", schema="personal")
+@Data
+public class User {
+    //Для Spring Data JPA
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name="phonenumber" , unique = true, nullable = false)
+    private String phoneNumber;
+    @Column(name="password" , unique = true, nullable = false)
+    private String password;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name="user_company",
+            schema="personal",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "company_uuid")
+    )
+    private Set<Company> companies = new HashSet<>();
+}

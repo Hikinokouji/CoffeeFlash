@@ -30,3 +30,7 @@ springdoc:
 
 tenant:
   db-url-template: jdbc:postgresql://postgres:5432/{db}
+
+logging:
+  level:
+    root: info
