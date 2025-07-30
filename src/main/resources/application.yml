@@ -37,7 +37,7 @@ logging:
     root: info
 
 minio:
-  bucket: ${MINIO_BUCKET}
-  url: ${MINIO_URL}
-  accessKey: ${MINIO_ACCESS_KEY}
-  secretKey: ${MINIO_SECRET_KEY}
+  bucket: images
+  url: http://localhost:9090
+  accessKey: uj32js21jas4j1
+  secretKey: 1j39cajskmdfvpaJ
