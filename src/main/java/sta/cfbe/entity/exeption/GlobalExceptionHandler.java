@@ -5,9 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import sta.cfbe.entity.exeption.resource.ImageUploadException;
 import sta.cfbe.entity.exeption.resource.ResourceDuplicateException;
 import sta.cfbe.entity.exeption.resource.ResourceNotFoundException;
 
+import java.awt.*;
 import java.security.SignatureException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -49,6 +51,12 @@ public class GlobalExceptionHandler extends RuntimeException {
     public ResponseEntity<ErrorResponse> expiredJwtException(ExpiredJwtException ex) {
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), HttpStatus.UNAUTHORIZED.value(), LocalDateTime.now());
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(ImageUploadException.class)
+    public ResponseEntity<ErrorResponse> imageUploadException(ImageUploadException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value(), LocalDateTime.now());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

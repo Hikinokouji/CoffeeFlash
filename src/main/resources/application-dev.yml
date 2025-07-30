@@ -40,3 +40,9 @@ logging:
 #  file:
 #    name: example
 #    path: /
+#//todo не підтягується з ENV дані, прийщлось в ручну їх передавати
+minio:
+  bucket: images
+  url: http://localhost:9000
+  accessKey: minioadmin
+  secretKey: minioadmin

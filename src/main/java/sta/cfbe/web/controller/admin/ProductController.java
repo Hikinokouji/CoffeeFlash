@@ -1,17 +1,23 @@
 package sta.cfbe.web.controller.admin;
 
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletResponse;
 import liquibase.exception.LiquibaseException;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import sta.cfbe.service.configService.ImageService;
 import sta.cfbe.service.configService.LiquibaseService;
 import sta.cfbe.service.admin.ProductService;
 import sta.cfbe.web.dto.company.ProductRequestDTO;
 import sta.cfbe.web.dto.company.ProductResponseDTO;
 import sta.cfbe.web.dto.company.TransactionResponse;
 
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +28,7 @@ import java.util.Map;
 public class ProductController {
     private final ProductService productService;
     private final LiquibaseService liquibaseService;
+    private final ImageService imageService;
 
     //@RreAuthorize - перед виконанням ендпоінту перевіряємо доступ до бази по токену
     @PreAuthorize("@accessChecked.existsByUserIdAndCompanyId(#authHeader, #companyId)")
@@ -48,7 +55,7 @@ public class ProductController {
     @PreAuthorize("@accessChecked.existsByUserIdAndCompanyId(#authHeader, #companyId)")
     @GetMapping("/{companyId}")
     public ResponseEntity<?> findAllProduct(@RequestHeader("Authorization") String authHeader,
-                                         @PathVariable String companyId) throws SQLException, LiquibaseException {
+                                            @PathVariable String companyId) throws SQLException, LiquibaseException {
         liquibaseService.runLiquibaseForTenant(companyId);
         List<ProductResponseDTO> products = productService.findAllProducts(companyId);
         return ResponseEntity.ok(products);
@@ -84,5 +91,32 @@ public class ProductController {
         return ResponseEntity.ok(Map.of("data", products));
     }
 
+    @PreAuthorize("@accessChecked.existsByUserIdAndCompanyId(#authHeader, #companyId)")
+    @PostMapping("/{companyId}/{id}/image")
+    public ResponseEntity<?> uploadImage(@RequestHeader("Authorization") String authHeader,
+                                         @PathVariable String companyId,
+                                         @PathVariable Long id,
+                                         @RequestParam("image") MultipartFile image) throws SQLException, LiquibaseException {
+        liquibaseService.runLiquibaseForTenant(companyId);
+        imageService.upload(companyId, id, image);
+        return ResponseEntity.ok("Зображення збережене");
+    }
+
+    @PreAuthorize("@accessChecked.existsByUserIdAndCompanyId(#authHeader, #companyId)")
+    @GetMapping("/{companyId}/{id}/image")
+    public void getImage(@RequestHeader("Authorization") String authHeader,
+                                      @PathVariable String companyId,
+                                      @PathVariable Long id,
+                                      HttpServletResponse response) throws SQLException, LiquibaseException {
+        liquibaseService.runLiquibaseForTenant(companyId);
+        InputStream imageStream = productService.getImageStream(companyId, id);
+        try{
+            response.setContentType("image/png");
+            IOUtils.copy(imageStream, response.getOutputStream());
+            response.flushBuffer();
+        }catch (Exception e){
+
+        }
+    }
 
 }

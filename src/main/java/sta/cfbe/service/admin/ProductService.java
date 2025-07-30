@@ -6,11 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 import sta.cfbe.entity.exeption.resource.ResourceNotFoundException;
 import sta.cfbe.repository.admins.ProductRepository;
 import sta.cfbe.repository.admins.TransactionRepository;
+import sta.cfbe.service.configService.ImageService;
 import sta.cfbe.web.dto.company.ProductRequestDTO;
 import sta.cfbe.web.dto.company.ProductResponseDTO;
 import sta.cfbe.web.dto.company.TransactionResponse;
 
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +22,10 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
     private final TransactionRepository transactionRepository;
+    private final ImageService imageService;
 
     //Формат параметрів 1 Поле Long id, закриваюючий параметр String db, DTO пред останнім
+
     public ProductResponseDTO createProduct(ProductRequestDTO product, String db) {
         return productRepository.createProduct(product, db);
     }
@@ -64,6 +68,17 @@ public class ProductService {
 
     public List<TransactionResponse> getAllTransactions(String db) {
         return transactionRepository.findAllTransactions(db);
+    }
+
+    @Transactional(readOnly = true)
+    public InputStream getImageStream(String db, Long productId) {
+        String fileName = productRepository.getImageNameByProductId(db, productId);
+        try{
+            String fullPath = "/" + db + "/" + fileName;
+            return imageService.download(fullPath);
+        }catch (Exception e){
+            throw new ResourceNotFoundException("001");
+        }
     }
 
 }
