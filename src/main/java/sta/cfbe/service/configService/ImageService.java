@@ -3,6 +3,7 @@ package sta.cfbe.service.configService;
 import io.minio.*;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import sta.cfbe.entity.exeption.resource.ImageUploadException;
@@ -13,6 +14,7 @@ import sta.cfbe.service.admin.ProductService;
 import java.io.InputStream;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ImageService {
@@ -24,6 +26,7 @@ public class ImageService {
         try {
             createBucket();
         } catch (Exception e) {
+            log.error("Upload::Error createBucket", e);
             throw new ImageUploadException("Помилка створення баккету");
         }
         if (file.isEmpty() || file.getOriginalFilename() == null) {
