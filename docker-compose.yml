@@ -68,7 +68,7 @@ services:
     depends_on:
       - backend
       - frontend_pos
-      - frontend_admin
+#      - frontend_admin
     networks:
       - app-net
 
