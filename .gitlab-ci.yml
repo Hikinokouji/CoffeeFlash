@@ -31,26 +31,26 @@ before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle  # Використовуємо локальну папку для кешу Gradle
 
 # --- ЕТАП 1: СБІРКА ПРОЕКТУ ---
-build:
-  stage: build
-  script:
-    - chmod +x ./gradlew
-    - ./gradlew bootJar -x test  # Збирає проєкт без запуску тестів
-  artifacts:
-    paths:
-      - build/libs/CoffeFlashBackend-0.0.1-SNAPSHOT.jar
-    expire_in: 1 hour
+#build:
+#  stage: build
+#  script:
+#    - chmod +x ./gradlew
+#    - ./gradlew bootJar -x test  # Збирає проєкт без запуску тестів
+#  artifacts:
+#    paths:
+#      - build/libs/CoffeFlashBackend-0.0.1-SNAPSHOT.jar
+#    expire_in: 1 hour
 
 # --- ЕТАП 2: СТВОРЕННЯ І ПУБЛІКАЦІЯ DOCKER-ОБРАЗУ ---
-docker-build:
-  stage: docker
-  image: docker:latest  # Змінюємо образ на Docker CLI, бо зараз будемо працювати з Docker
-  services:
-    - docker:dind  # Docker-in-Docker — дозволяє запускати Docker всередині CI
-  script:
-    - docker build -t registry.gitlab.com/sta1485512/cofffeflashbackend:latest .  # Створюємо Docker-образ з тега `latest`
-    - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com  # Вхід у GitLab Registry
-    - docker push registry.gitlab.com/sta1485512/cofffeflashbackend:latest  # Публікуємо образ у GitLab Container Registry
+#docker-build:
+#  stage: docker
+#  image: docker:latest  # Змінюємо образ на Docker CLI, бо зараз будемо працювати з Docker
+#  services:
+#    - docker:dind  # Docker-in-Docker — дозволяє запускати Docker всередині CI
+#  script:
+#    - docker build -t registry.gitlab.com/sta1485512/cofffeflashbackend:latest .  # Створюємо Docker-образ з тега `latest`
+#    - echo "$CI_JOB_TOKEN" | docker login -u gitlab-ci-token --password-stdin registry.gitlab.com  # Вхід у GitLab Registry
+#    - docker push registry.gitlab.com/sta1485512/cofffeflashbackend:latest  # Публікуємо образ у GitLab Container Registry
 
 deploy:
   stage: deploy
