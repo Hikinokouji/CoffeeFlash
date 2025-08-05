@@ -9,8 +9,8 @@ workflow:
 
 # Визначаємо етапи пайплайну (по черзі): спочатку build, потім docker
 stages:
-  - build
-  - docker
+#  - build
+#  - docker
   - deploy
 
 
