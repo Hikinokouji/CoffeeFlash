@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "sta"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.2"
 
 java {
     toolchain {
@@ -65,6 +65,6 @@ dependencies {
 //    }
 //}
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
+//tasks.withType<Test> {
+//    useJUnitPlatform()
+//}

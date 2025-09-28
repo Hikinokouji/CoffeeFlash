@@ -113,6 +113,7 @@ public class ApplicationConfig {
                 .authorizeHttpRequests( authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .anonymous(anonimus -> anonimus.disable()

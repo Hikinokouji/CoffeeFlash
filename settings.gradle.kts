@@ -1,1 +1,1 @@
-rootProject.name = "CoffeFlashBackend"
+rootProject.name = "BackendServerCF"
