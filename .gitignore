@@ -1,5 +1,8 @@
 HELP.md
 .gradle
+.gitlab-ci.yml
+.env
+docker-compose.yml
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
@@ -35,5 +38,3 @@ out/
 
 ### VS Code ###
 .vscode/
-.env
-.tasklist

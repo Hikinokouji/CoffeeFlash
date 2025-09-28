@@ -4,9 +4,9 @@ version: '3.9'
 services:
   postgres:
     image: postgres:16
-    container_name: dev-postgres
+    container_name: postgres
     environment:
-      POSTGRES_DB: testBD
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
