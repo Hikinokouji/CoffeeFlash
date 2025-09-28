@@ -25,7 +25,7 @@ It provides tools for handling daily operations, customer orders, inventory, sta
 ## 📦 Installation & Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/coffeeflash.git
+   git clone https://github.com/Hikinokouji/CoffeeFlash.git
    cd coffeeflash
 
 
